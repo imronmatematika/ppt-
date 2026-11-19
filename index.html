@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perbandingan Trigonometri: Sinus & Kosinus (Kelas X)</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --slide-bg: #ffffff;
+      --primary: #1d4ed8;
+      --primary-light: #eff6ff;
+      --accent: #0ea5e9;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --sin-color: #dc2626;
+      --cos-color: #16a34a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .deck-wrapper {
+      width: 100%;
+      max-width: 1040px;
+    }
+
+    .slide {
+      display: none;
+      background: var(--slide-bg);
+      aspect-ratio: 16 / 9;
+      width: 100%;
+      border-radius: 16px;
+      padding: 44px 56px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      position: relative;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .slide.active {
+      display: flex;
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      padding: 6px 14px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      line-height: 1.2;
+      color: #0f172a;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      font-size: 1.85rem;
+      color: #0f172a;
+      margin-bottom: 18px;
+    }
+
+    p {
+      font-size: 1.08rem;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: var(--muted);
+      max-width: 720px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: center;
+      flex: 1;
+    }
+
+    .card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+    }
+
+    .card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+      color: #0f172a;
+    }
+
+    ul {
+      padding-left: 20px;
+      line-height: 1.65;
+      font-size: 1.02rem;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .formula-box {
+      background: var(--primary-light);
+      border-left: 5px solid var(--primary);
+      padding: 16px 20px;
+      border-radius: 8px;
+      font-size: 1.15rem;
+      margin: 12px 0;
+    }
+
+    .sin-text { color: var(--sin-color); font-weight: 700; }
+    .cos-text { color: var(--cos-color); font-weight: 700; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 0.98rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      text-align: center;
+    }
+
+    th {
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+      margin-top: 12px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    button {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 10px 22px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover:not(:disabled) {
+      background: #1e40af;
+    }
+
+    button:disabled {
+      background: #475569;
+      cursor: not-allowed;
+    }
+
+    .counter {
+      color: #e2e8f0;
+      font-weight: 600;
+      min-width: 110px;
+      text-align: center;
+    }
+
+    .cover-hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    @media (max-width: 768px) {
+      .slide {
+        aspect-ratio: auto;
+        min-height: 520px;
+        padding: 28px 24px;
+      }
+      h1 { font-size: 1.8rem; }
+      h2 { font-size: 1.4rem; }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck-wrapper">
+    <!-- SLIDE 1: JUDUL -->
+    <section class="slide active">
+      <div class="cover-hero">
+        <span class="tag">Matematika • Kelas X SMA/MA</span>
+        <h1>Perbandingan Trigonometri:<br />Sinus dan Kosinus</h1>
+        <p class="subtitle">
+          Memahami hubungan sudut dan panjang sisi pada segitiga siku-siku, nilai sudut istimewa, serta penerapannya dalam masalah sehari-hari.
+        </p>
+        <div class="badge-row">
+          <span class="pill">Segitiga Siku-Siku</span>
+          <span class="pill">Definisi sin α &amp; cos α</span>
+          <span class="pill">Sudut Istimewa</span>
+          <span class="pill">Contoh &amp; Latihan</span>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Materi Ajar Kelas X</span>
+        <span>Gunakan tombol panah (&larr; / &rarr;) atau tombol di bawah</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: KONSEP SEGITIGA SIKU-SIKU -->
+    <section class="slide">
+      <div>
+        <span class="tag">Konsep Dasar</span>
+        <h2>Unsur Sisi pada Segitiga Siku-Siku</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Penamaan Sisi terhadap Sudut &alpha;</h3>
+            <ul>
+              <li><strong>Sisi Depan (<em>de</em>):</strong> sisi di hadapan sudut &alpha;.</li>
+              <li><strong>Sisi Samping (<em>sa</em>):</strong> sisi yang mengapit sudut &alpha; (bukan sisi miring).</li>
+              <li><strong>Sisi Miring / Hipotenusa (<em>mi</em>):</strong> sisi terpanjang di depan sudut siku-siku (90&deg;).</li>
+            </ul>
+            <p style="margin-top:12px; font-size:0.95rem; color:#475569;">
+              <em>Catatan:</em> Jika sudut acuan berpindah dari &alpha; ke sudut lainnya, sisi <strong>depan</strong> dan <strong>samping</strong> ikut bertukar, sedangkan sisi <strong>miring</strong> tetap.
+            </p>
+          </div>
+          <div style="display:flex; justify-content:center;">
+            <svg width="310" height="230" viewBox="0 0 310 230" aria-label="Diagram segitiga siku-siku">
+              <polygon points="50,190 250,190 250,50" fill="#eff6ff" stroke="#1d4ed8" stroke-width="3" />
+              <polyline points="232,190 232,172 250,172" fill="none" stroke="#1d4ed8" stroke-width="2" />
+              <path d="M 95,190 A 45,45 0 0,0 82,167" fill="none" stroke="#dc2626" stroke-width="2.5" />
+              <text x="98" y="182" fill="#dc2626" font-size="16" font-weight="bold">&alpha;</text>
+              <text x="135" y="214" fill="#16a34a" font-size="14" font-weight="bold">Samping (sa)</text>
+              <text x="258" y="125" fill="#dc2626" font-size="14" font-weight="bold">Depan (de)</text>
+              <text x="92" y="110" fill="#1d4ed8" font-size="14" font-weight="bold">Miring (mi)</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Perbandingan Trigonometri — Kelas X</span>
+        <span>Slide 2 / 6</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: DEFINISI SINUS & KOSINUS -->
+    <section class="slide">
+      <div>
+        <span class="tag">Rumus Utama</span>
+        <h2>Definisi Sinus dan Kosinus</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3 class="sin-text">Sinus (&alpha;) — "Sin-De-Mi"</h3>
+            <div class="formula-box">
+              sin &alpha; = <span class="sin-text">Sisi Depan</span> / Sisi Miring = <strong>de / mi</strong>
+            </div>
+            <p>Menyatakan perbandingan panjang sisi di depan sudut &alpha; terhadap sisi miring segitiga siku-siku.</p>
+          </div>
+          <div class="card">
+            <h3 class="cos-text">Kosinus (&alpha;) — "Cos-Sa-Mi"</h3>
+            <div class="formula-box">
+              cos &alpha; = <span class="cos-text">Sisi Samping</span> / Sisi Miring = <strong>sa / mi</strong>
+            </div>
+            <p>Menyatakan perbandingan panjang sisi di samping sudut &alpha; terhadap sisi miring segitiga siku-siku.</p>
+          </div>
+        </div>
+        <div class="card" style="margin-top: 16px;">
+          <strong>Sifat Penting:</strong> Karena sisi miring selalu lebih panjang dari sisi depan maupun samping pada segitiga siku-siku, untuk sudut lancip (0&deg; &lt; &alpha; &lt; 90&deg;) selalu berlaku <strong>0 &lt; sin &alpha; &lt; 1</strong> dan <strong>0 &lt; cos &alpha; &lt; 1</strong>.
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Perbandingan Trigonometri — Kelas X</span>
+        <span>Slide 3 / 6</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: TABEL SUDUT ISTIMEWA -->
+    <section class="slide">
+      <div>
+        <span class="tag">Nilai Baku</span>
+        <h2>Tabel Perbandingan Sudut Istimewa</h2>
+        <p>Nilai sinus dan kosinus untuk sudut-sudut istimewa pada kuadran I wajib dipahami:</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Sudut (&alpha;)</th>
+              <th>0&deg;</th>
+              <th>30&deg;</th>
+              <th>45&deg;</th>
+              <th>60&deg;</th>
+              <th>90&deg;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>sin &alpha;</strong></td>
+              <td>0</td>
+              <td>1/2</td>
+              <td>&frac12;&radic;2</td>
+              <td>&frac12;&radic;3</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td><strong>cos &alpha;</strong></td>
+              <td>1</td>
+              <td>&frac12;&radic;3</td>
+              <td>&frac12;&radic;2</td>
+              <td>1/2</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="card" style="margin-top: 18px;">
+          <strong>Pola Sudut Berpenyiku:</strong> sin &alpha; = cos (90&deg; &minus; &alpha;). Contoh: sin 30&deg; = cos 60&deg; = 1/2, dan sin 45&deg; = cos 45&deg; = &frac12;&radic;2.
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Perbandingan Trigonometri — Kelas X</span>
+        <span>Slide 4 / 6</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: CONTOH SOAL -->
+    <section class="slide">
+      <div>
+        <span class="tag">Pembahasan</span>
+        <h2>Contoh Soal Segitiga Siku-Siku</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Soal</h3>
+            <p>
+              Diketahui segitiga siku-siku ABC siku-siku di C. Panjang sisi di depan sudut A adalah <strong>6 cm</strong> dan panjang sisi di samping sudut A adalah <strong>8 cm</strong>.
+            </p>
+            <p>Tentukan nilai <strong>sin A</strong> dan <strong>cos A</strong>!</p>
+          </div>
+          <div class="card">
+            <h3>Langkah Penyelesaian</h3>
+            <ol style="padding-left: 20px; line-height: 1.7;">
+              <li>Hitung sisi miring (AB) dengan Teorema Pythagoras:<br />
+                AB = &radic;(6<sup>2</sup> + 8<sup>2</sup>) = &radic;(36 + 64) = &radic;100 = <strong>10 cm</strong>.
+              </li>
+              <li>Hitung <span class="sin-text">sin A</span> = de / mi = 6 / 10 = <strong>3/5</strong> (0,6).</li>
+              <li>Hitung <span class="cos-text">cos A</span> = sa / mi = 8 / 10 = <strong>4/5</strong> (0,8).</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Perbandingan Trigonometri — Kelas X</span>
+        <span>Slide 5 / 6</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: APLIKASI & LATIHAN -->
+    <section class="slide">
+      <div>
+        <span class="tag">Penerapan &amp; Latihan</span>
+        <h2>Trigonometri di Kehidupan Sehari-hari</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Contoh Penerapan</h3>
+            <ul>
+              <li><strong>Tangga bersandar:</strong> menentukan tinggi tembok yang dicapai tangga dengan sudut elevasi tertentu.</li>
+              <li><strong>Navigasi &amp; survei:</strong> mengukur jarak atau ketinggian objek tanpa pengukuran langsung.</li>
+              <li><strong>Arsitektur &amp; teknik:</strong> menghitung kemiringan atap atau jalur landai (<em>ramp</em>).</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Latihan Singkat untuk Siswa</h3>
+            <p>
+              Sebuah tangga sepanjang <strong>4 meter</strong> disandarkan ke dinding dengan sudut elevasi <strong>60&deg;</strong> terhadap lantai.
+            </p>
+            <p>
+              Berapa tinggi ujung atas tangga dari lantai?
+            </p>
+            <p style="margin-top:10px; font-size:0.95rem; color:#1d4ed8; font-weight:600;">
+              Petunjuk: Gunakan sin 60&deg; = tinggi / panjang tangga. (Jawaban: 2&radic;3 m)
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Perbandingan Trigonometri — Kelas X</span>
+        <span>Slide 6 / 6</span>
+      </div>
+    </section>
+  </div>
+
+  <div class="controls">
+    <button id="prevBtn" onclick="changeSlide(-1)">&larr; Sebelumnya</button>
+    <span class="counter" id="counter">Slide 1 / 6</span>
+    <button id="nextBtn" onclick="changeSlide(1)">Berikutnya &rarr;</button>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll(".slide");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const counter = document.getElementById("counter");
+    let current = 0;
+
+    function renderSlide() {
+      slides.forEach((s, i) => s.classList.toggle("active", i === current));
+      counter.textContent = `Slide ${current + 1} / ${slides.length}`;
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === slides.length - 1;
+    }
+
+    function changeSlide(step) {
+      current = Math.max(0, Math.min(slides.length - 1, current + step));
+      renderSlide();
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight" || e.key === "PageDown") changeSlide(1);
+      if (e.key === "ArrowLeft" || e.key === "PageUp") changeSlide(-1);
+    });
+
+    renderSlide();
+  </script>
+</body>
+</html>
